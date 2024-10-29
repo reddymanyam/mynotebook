@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import axios from 'axios';
 import Notes from './Notes'
+import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import EditPage from './EditPage';
 
 const App = () => {
 
@@ -7,7 +10,8 @@ const App = () => {
 
   const getNotes = async () => {
     try {
-      const response = await axios.get("http://localhost:6000/notes");
+      const response = await axios.get("http://localhost:8000/notes");
+
       setNotesData(response?.data);
     }
     catch (err) {
@@ -19,10 +23,16 @@ const App = () => {
     getNotes();
   }, [])
 
+  
+
+
   return (
-    <div>
-      <Notes notesData={notesData} />
-    </div>
+    <Router>
+    <Routes>
+        <Route path="/" element={<Notes  notesData={notesData} setNotesData={setNotesData}/>} />
+        <Route path="/edit/:id" element={<EditPage notesData={notesData} setNotesData={setNotesData} />} />
+    </Routes>
+</Router>
   )
 }
 
