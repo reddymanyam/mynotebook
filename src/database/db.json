@@ -1,0 +1,16 @@
+{
+    "notes": [
+        {
+            "id": 1,
+            "notes":"Good morning....!"
+        },
+        {
+            "id": 2,
+            "notes":"Good Afternoon....!"
+        },
+        {
+            "id": 1,
+            "notes":"Good Evening....!"
+        }
+    ]
+}
