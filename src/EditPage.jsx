@@ -5,31 +5,28 @@ import axios from 'axios';
 const EditPage = ({ notesData, setNotesData }) => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [notes, setNotes] = useState('');
+  const [noteText, setNoteText] = useState('');
 
   useEffect(() => {
     const noteToEdit = notesData.find((note) => note.id === parseInt(id));
     if (noteToEdit) {
-      setNotes(noteToEdit.notes || noteToEdit.note);
+      setNoteText(noteToEdit.note); 
     }
-  }, [id, notesData]);
+  }, [id]); 
 
   const handleEdit = async () => {
     try {
-      // Create the updated note object
       const updatedNote = {
-        notes: notes, // Using 'notes' to match your server structure
-        id: parseInt(id)
+        note: noteText,  
+        id: parseInt(id) 
       };
 
-      // Send update to server
-      await axios.put(`http://localhost:4000/notes/${id}`, updatedNote);
+      await axios.put(`http://localhost:8000/notes/${id}`, updatedNote);
 
-      // Update local state
-      setNotesData(prevNotes => 
-        prevNotes.map(note => 
-          note.id === parseInt(id) 
-            ? updatedNote 
+      setNotesData(prevNotes =>
+        prevNotes.map(note =>
+          note.id === parseInt(id)
+            ? { ...note, note: noteText } 
             : note
         )
       );
@@ -45,8 +42,8 @@ const EditPage = ({ notesData, setNotesData }) => {
       <h1 className='text-2xl font-bold mb-4'>Edit Note</h1>
       <div className='space-y-4'>
         <textarea
-          value={notes}
-          onChange={(e) => setNotes(e.target.value)}
+          value={noteText}
+          onChange={(e) => setNoteText(e.target.value)}
           className='w-full h-48 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500'
           placeholder="Enter your note here..."
         />

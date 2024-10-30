@@ -7,10 +7,10 @@ const Notes = ({ notesData, setNotesData }) => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:4000/notes/${id}`);
+      await axios.delete(`http://localhost:8000/notes/${id}`);
       setNotesData(prev => prev.filter(note => note.id !== id));
     } catch (err) {
-      console.log(`Error deleting note: ${err}`);
+     alert(`Error deleting note: ${err}`);
     }
   };
 
@@ -50,7 +50,7 @@ const Notes = ({ notesData, setNotesData }) => {
                 {index + 1}
               </td>
               <td className="border border-slate-300 p-1">
-                {note.note || note.notes}
+                {note.note}
               </td>
               <td className="border border-slate-300">
                 <select className='mx-5 w-24 p-1 rounded'>
