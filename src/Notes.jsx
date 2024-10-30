@@ -7,7 +7,7 @@ const Notes = ({ notesData, setNotesData }) => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/notes/${id}`);
+      await axios.delete(`http://localhost:4000/notes/${id}`);
       setNotesData(prev => prev.filter(note => note.id !== id));
     } catch (err) {
      alert(`Error deleting note: ${err}`);
