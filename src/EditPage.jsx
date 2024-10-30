@@ -23,7 +23,7 @@ const EditPage = ({ notesData, setNotesData }) => {
       };
 
       // Send update to server
-      await axios.put(`http://localhost:8000/notes/${id}`, updatedNote);
+      await axios.put(`http://localhost:4000/notes/${id}`, updatedNote);
 
       // Update local state
       setNotesData(prevNotes => 

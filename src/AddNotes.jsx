@@ -8,7 +8,7 @@ const AddNotes = ({ setNotesData }) => {
 
   const handleAdd = async () => {
     try {
-      const response = await axios.post("http://localhost:8000/notes", { note: noteText });
+      const response = await axios.post("http://localhost:4000/notes", { note: noteText });
       setNotesData(prev => [...prev, response.data]);
       navigate('/');
     } catch (err) {
