@@ -62,7 +62,7 @@ const Notes = ({ notesData, setNotesData }) => {
               </td>
               <td className="border border-slate-300">
                 <select 
-                  className='mx-5 w-24 p-1 rounded' 
+                  className='mx-5 w-30 p-1 rounded' 
                   value={note.color || ''} 
                   onChange={(e) => handleColorChange(note.id, e.target.value)}
                 >

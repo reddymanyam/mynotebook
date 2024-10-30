@@ -5,26 +5,27 @@ import axios from 'axios';
 const EditPage = ({ notesData, setNotesData }) => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [notes, setNotes] = useState(notesData);
+  const [notes, setNotes] = useState("");
 
   useEffect(() => {
     const noteToEdit = notesData.find((note) => note.id === parseInt(id));
+    
     if (noteToEdit) {
       setNotes(noteToEdit.note);
+    } else {
+      axios.get(`http://localhost:4000/notes/${id}`)
+        .then(response => setNotes(response.data.note))
+        .catch(err => console.log(`Error fetching note: ${err}`));
     }
-  }, [id, notesData]);
+  }, [id]);
 
   const handleEdit = async () => {
     try {
-      const updatedNote = {
-        note: notes,  
-        id: parseInt(id)
-      };
+      const updatedNote = { note: notes, id: parseInt(id) };
 
-      await axios.put(`http://localhost:4000/notes/${id}`,(updatedNote), {
-        headers: {
-          'Content-Type': 'application/json'
-        }});
+      await axios.put(`http://localhost:4000/notes/${id}`, JSON.stringify(updatedNote), {
+        headers: { 'Content-Type': 'application/json' }
+      });
 
       setNotesData(prevNotes => 
         prevNotes.map(note => 
