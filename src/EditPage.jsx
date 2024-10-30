@@ -21,7 +21,7 @@ const EditPage = ({ notesData, setNotesData }) => {
         id: parseInt(id)
       };
 
-      await axios.put(`http://localhost:4000/notes/${id}`, JSON.stringify(updatedNote), {
+      await axios.put(`http://localhost:4000/notes/${id}`,(updatedNote), {
         headers: {
           'Content-Type': 'application/json'
         }});

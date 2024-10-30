@@ -10,7 +10,7 @@ const Notes = ({ notesData, setNotesData }) => {
       await axios.delete(`http://localhost:4000/notes/${id}`);
       setNotesData(prev => prev.filter(note => note.id !== id));
     } catch (err) {
-     alert(`Error deleting note: ${err}`);
+      alert(`Error deleting note: ${err}`);
     }
   };
 
@@ -20,6 +20,14 @@ const Notes = ({ notesData, setNotesData }) => {
 
   const handleAdd = () => {
     navigate('/addnotes');
+  };
+
+  const handleColorChange = (id, color) => {
+    setNotesData(prev => 
+      prev.map(note => 
+        note.id === id ? { ...note, color } : note
+      )
+    );
   };
 
   return (
@@ -45,19 +53,24 @@ const Notes = ({ notesData, setNotesData }) => {
         </thead>
         <tbody>
           {notesData.map((note, index) => (
-            <tr key={note.id}>
+            <tr key={note.id} >
               <td className="border border-slate-300 w-[50px] p-1 text-center">
                 {index + 1}
               </td>
-              <td className="border border-slate-300 p-1">
+              <td className="border border-slate-300 p-1" style={{ backgroundColor: note.color || 'white' }}>
                 {note.note}
               </td>
               <td className="border border-slate-300">
-                <select className='mx-5 w-24 p-1 rounded'>
-                  <option value="Blue">Blue</option>
-                  <option value="Red">Red</option>
-                  <option value="Green">Green</option>
-                  <option value="Yellow">Yellow</option>
+                <select 
+                  className='mx-5 w-24 p-1 rounded' 
+                  value={note.color || ''} 
+                  onChange={(e) => handleColorChange(note.id, e.target.value)}
+                >
+                  <option value="">Select Color</option>
+                  <option value="blue">Blue</option>
+                  <option value="red">Red</option>
+                  <option value="green">Green</option>
+                  <option value="yellow">Yellow</option>
                 </select>
               </td>
               <td className="border border-slate-300">
