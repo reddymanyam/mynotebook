@@ -6,10 +6,12 @@ const AddNotes = ({ setNotesData }) => {
   const [noteText, setNoteText] = useState("");
 
   const navigate = useNavigate();
+  
+  const newnote = {note:noteText};
 
   const handleAdd = async () => {
     try {
-      const response = await axios.post("http://localhost:4000/notes", { note: noteText });
+      const response = await axios.post("http://localhost:4000/notes", newnote);
       setNotesData(prev => [...prev, response.data]);
       navigate('/');
     } catch (err) {

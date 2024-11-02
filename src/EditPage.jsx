@@ -9,7 +9,7 @@ const EditPage = ({ notesData, setNotesData }) => {
 
   useEffect(() => {
     const noteToEdit = notesData.find((note) => note.id === parseInt(id));
-    
+
     if (noteToEdit) {
       setNotes(noteToEdit.note);
     } else {
@@ -17,7 +17,7 @@ const EditPage = ({ notesData, setNotesData }) => {
         .then(response => setNotes(response.data.note))
         .catch(err => console.log(`Error fetching note: ${err}`));
     }
-  }, [id]);
+  }, [id, notesData]);
 
   const handleEdit = async () => {
     try {
@@ -35,7 +35,7 @@ const EditPage = ({ notesData, setNotesData }) => {
         )
       );
 
-      navigate('/');
+      navigate('/'); 
     } catch (err) {
       console.log(`Error updating note: ${err}`);
     }
