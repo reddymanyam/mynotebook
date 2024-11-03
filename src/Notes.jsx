@@ -6,7 +6,6 @@ const Notes = ({ notesData, setNotesData }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
-  // Fetch notes data from server
   const getNotes = async () => {
     setLoading(true);
     try {
@@ -19,12 +18,10 @@ const Notes = ({ notesData, setNotesData }) => {
     }
   };
 
-  // Initial data fetch
   useEffect(() => {
     getNotes();
   }, []);
 
-  // Delete a note by ID
   const handleDelete = async (id) => {
     try {
       await axios.delete(`http://localhost:4000/notes/${id}`);
@@ -34,20 +31,17 @@ const Notes = ({ notesData, setNotesData }) => {
     }
   };
 
-  // Edit a note by navigating to the edit page
   const handleEdit = (id) => {
     navigate(`/edit/${id}`);
   };
 
-  // Navigate to add notes page
   const handleAdd = () => {
     navigate('/addnotes');
   };
 
-  // Change color of a note and persist to the server
   const handleColorChange = async (id, color) => {
-    setNotesData(prev => 
-      prev.map(note => 
+    setNotesData(prev =>
+      prev.map(note =>
         note.id === id ? { ...note, color } : note
       )
     );
@@ -63,14 +57,14 @@ const Notes = ({ notesData, setNotesData }) => {
     <div>
       <div className='flex justify-around my-6'>
         <h1 className='text-xl font-bold text-center'>MY NOTEBOOK</h1>
-        <button 
-          className='text-xl font-bold bg-purple-700 text-white rounded-md p-2 hover:bg-purple-800' 
+        <button
+          className='text-xl font-bold bg-purple-700 text-white rounded-md p-2 hover:bg-purple-800'
           onClick={handleAdd}
         >
           Add notes +
         </button>
       </div>
-      
+
       {loading ? (
         <p className="text-center text-2xl font-serif font-bold">Loading...</p>
       ) : (
@@ -93,9 +87,9 @@ const Notes = ({ notesData, setNotesData }) => {
                   {note.note}
                 </td>
                 <td className="border border-slate-300">
-                  <select 
-                    className='mx-5 w-30 p-1 rounded' 
-                    value={note.color || ''} 
+                  <select
+                    className='mx-5 w-30 p-1 rounded'
+                    value={note.color || ''}
                     onChange={(e) => handleColorChange(note.id, e.target.value)}
                   >
                     <option value="">Select Color</option>
@@ -106,14 +100,14 @@ const Notes = ({ notesData, setNotesData }) => {
                   </select>
                 </td>
                 <td className="border border-slate-300">
-                  <button 
-                    onClick={() => handleEdit(note.id)} 
+                  <button
+                    onClick={() => handleEdit(note.id)}
                     className="mx-8 bg-green-700 w-14 rounded-xl p-0.5 text-white hover:bg-green-800"
                   >
                     Edit
                   </button>
-                  <button 
-                    onClick={() => handleDelete(note.id)} 
+                  <button
+                    onClick={() => handleDelete(note.id)}
                     className="bg-red-700 w-14 rounded-xl p-0.5 text-white hover:bg-red-800"
                   >
                     Delete
