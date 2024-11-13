@@ -18,6 +18,7 @@ const EditPage = ({ notesData, setNotesData }) => {
       axios.get(`http://localhost:4000/notes/${id}`)
         .then(response => setNotes(response.data.note))  
         .catch(err => console.log(`Error fetching note: ${err}`));
+        
     }
   }, [id, notesData]);
 
