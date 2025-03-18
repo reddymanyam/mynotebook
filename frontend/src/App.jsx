@@ -13,7 +13,7 @@ const App = () => {
   const getNotes = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:7777/notes");
+      const response = await axios.get("http://localhost:7777/users");
       setNotesData(response.data);
     } catch (err) {
       alert(`Error fetching data: ${err}`);

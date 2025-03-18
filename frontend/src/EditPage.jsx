@@ -25,7 +25,7 @@ const EditPage = ({ notesData, setNotesData, getNotes }) => {
   const handleUpdate = async () => {
     try {
       const updatedNote = { note: notes, id: parseInt(id) };
-      await axios.put(`http://localhost:7777/notes/${id}`, updatedNote);
+      await axios.put(`http://localhost:7777/users/${id}`, updatedNote);
       setNotesData(prevNotes => 
         prevNotes.map(note => 
           note.id === parseInt(id) ? { ...note, note: notes } : note
