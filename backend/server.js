@@ -19,19 +19,33 @@ app.post('/notes', async(req,res)=>{
     try{
         const notes = new User(req.body);
         await notes.save();
-        console.log("Data saved successfully:", user);
+        console.log("Data saved successfully:", notes);
         res.status(201).send("Data saved successfully");
     }catch(err){
         res.status(400).send("something went wrong")
     }
 })
 
-app.patch('/notes', async(req,res)=>{
-    
+app.patch('/notes/:id', async(req,res)=>{
+
+    const notesId = req.body._id;
+    try{
+    const notes = User.findByIdAndUpdate(notesId);
+    await notes.save();
+    }catch(err){
+        res.status(400).send("something went wrong...!");
+    }
 })
 
-app.delete('/notes', async(req,res)=>{
-    
+app.delete('/notes/:id', async(req,res)=>{
+
+    const notesId = req.body._id;
+    try{
+        const notes = User.findByIdAndDelete(notesId);
+        await notes.save();
+    }catch(err){
+       res.status(400).send("something went wrong...!");
+    }
 })
 
 
