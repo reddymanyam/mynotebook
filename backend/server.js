@@ -2,15 +2,17 @@ const express = require("express");
 const connectDB = require('./config/db'); // Ensure this file exports connectDB correctly
 const dotenv = require("dotenv");
 const User = require('./models/User');
+const cors = require('cors'); // Add this import
 
 dotenv.config(); // Load environment variables
 
 const app = express();
 
+app.use(cors());
 app.use(express.json()); // ✅ Fix: Add missing parentheses
 
 // ✅ GET all notes
-app.get('/notes', async (req, res) => {
+app.get('/users', async (req, res) => {
     try {
         const notes = await User.find({});
         res.status(200).json(notes);
@@ -20,7 +22,7 @@ app.get('/notes', async (req, res) => {
 });
 
 // ✅ POST (Create new note)
-app.post('/notes', async (req, res) => {
+app.post('/users', async (req, res) => {
     try {
         const note = new User(req.body);
         await note.save();
@@ -32,7 +34,7 @@ app.post('/notes', async (req, res) => {
 });
 
 // ✅ PATCH (Update note)
-app.patch('/notes/:id', async (req, res) => {
+app.patch('/users/:id', async (req, res) => {
     try {
         const note = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if (!note) return res.status(404).json({ error: "Note not found" });
@@ -44,7 +46,7 @@ app.patch('/notes/:id', async (req, res) => {
 });
 
 // ✅ DELETE (Delete note)
-app.delete('/notes/:id', async (req, res) => {
+app.delete('/users/:id', async (req, res) => {
     try {
         const note = await User.findByIdAndDelete(req.params.id);
         if (!note) return res.status(404).json({ error: "Note not found" });
