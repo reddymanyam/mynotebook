@@ -8,7 +8,7 @@ const Notes = ({ notesData, setNotesData, loading }) => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:4000/notes/${id}`);
+      await axios.delete(`http://localhost:7777/notes/${id}`);
       setNotesData(prev => prev.filter(note => note.id !== id)); 
     } catch (err) {
       alert(`Error deleting note: ${err}`);
@@ -31,7 +31,7 @@ const Notes = ({ notesData, setNotesData, loading }) => {
     );
 
     try {
-      await axios.put(`http://localhost:4000/notes/${id}`, { color });
+      await axios.put(`http://localhost:7777/notes/${id}`, { color });
     } catch (err) {
       alert(`Error updating color: ${err}`);
     }

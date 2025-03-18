@@ -15,7 +15,7 @@ const EditPage = ({ notesData, setNotesData, getNotes }) => {
     if (noteToEdit) {
       setNotes(noteToEdit.note);
     } else {
-      axios.get(`http://localhost:4000/notes/${id}`)
+      axios.get(`http://localhost:7777/notes/${id}`)
         .then(response => setNotes(response.data.note))  
         .catch(err => console.log(`Error fetching note: ${err}`));
         
@@ -25,7 +25,7 @@ const EditPage = ({ notesData, setNotesData, getNotes }) => {
   const handleUpdate = async () => {
     try {
       const updatedNote = { note: notes, id: parseInt(id) };
-      await axios.put(`http://localhost:4000/notes/${id}`, updatedNote);
+      await axios.put(`http://localhost:7777/notes/${id}`, updatedNote);
       setNotesData(prevNotes => 
         prevNotes.map(note => 
           note.id === parseInt(id) ? { ...note, note: notes } : note
