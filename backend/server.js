@@ -1,17 +1,16 @@
 const express = require("express");
-const connectDB = require('./config/db'); // Ensure this file exports connectDB correctly
+const connectDB = require('./config/db'); 
 const dotenv = require("dotenv");
 const User = require('./models/User');
-const cors = require('cors'); // Add this import
+const cors = require('cors'); 
 
-dotenv.config(); // Load environment variables
+dotenv.config(); 
 
 const app = express();
 
 app.use(cors());
-app.use(express.json()); // ✅ Fix: Add missing parentheses
+app.use(express.json()); 
 
-// ✅ GET all notes
 app.get('/users', async (req, res) => {
     try {
         const notes = await User.find({});
@@ -21,20 +20,18 @@ app.get('/users', async (req, res) => {
     }
 });
 
-// ✅ POST (Create new note)
 app.post('/users', async (req, res) => {
     try {
         const note = new User(req.body);
         await note.save();
         console.log("Data saved successfully:", note);
-        res.status(201).json({ message: "Data saved successfully", data: note });
+        res.status(201).send(note);
     } catch (err) {
         res.status(400).json({ error: "Something went wrong" });
     }
 });
 
-// ✅ PATCH (Update note)
-app.patch('/users/:id', async (req, res) => {
+app.patch('/users', async (req, res) => {
     try {
         const note = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if (!note) return res.status(404).json({ error: "Note not found" });
@@ -45,10 +42,11 @@ app.patch('/users/:id', async (req, res) => {
     }
 });
 
-// ✅ DELETE (Delete note)
 app.delete('/users/:id', async (req, res) => {
+
+    const userId = req.params.id;
     try {
-        const note = await User.findByIdAndDelete(req.params.id);
+        const note = await User.findByIdAndDelete(userId);
         if (!note) return res.status(404).json({ error: "Note not found" });
 
         res.status(200).json({ message: "Note deleted successfully" });
@@ -59,7 +57,7 @@ app.delete('/users/:id', async (req, res) => {
 
 const PORT = process.env.PORT || 7777;
 
-// ✅ Database connection and server start
+// Database connection and server start
 connectDB()
     .then(() => {
         console.log("Database connection established..!");
