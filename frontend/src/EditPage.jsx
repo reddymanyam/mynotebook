@@ -10,7 +10,7 @@ const EditPage = ({ notesData, setNotesData, getNotes }) => {
   const [notes, setNotes] = useState("");
 
   useEffect(() => {
-    const noteToEdit = notesData.find((note) => note.id === parseInt(id));
+    const noteToEdit = notesData.find((note) => note._id === parseInt(id));
 
     if (noteToEdit) {
       setNotes(noteToEdit.note);
@@ -28,7 +28,7 @@ const EditPage = ({ notesData, setNotesData, getNotes }) => {
       await axios.put(`http://localhost:7777/users/${id}`, updatedNote);
       setNotesData(prevNotes => 
         prevNotes.map(note => 
-          note.id === parseInt(id) ? { ...note, note: notes } : note
+          note._id === parseInt(id) ? { ...note, note: notes } : note
         )
       );
       await getNotes();

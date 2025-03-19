@@ -9,11 +9,11 @@ const Notes = ({ notesData, setNotesData, loading }) => {
   const handleDelete = async (id) => {
     try {
       await axios.delete(`http://localhost:7777/users/${id}`);
-      setNotesData(prev => prev.filter(note => note.id !== id)); 
+      setNotesData(prev => prev.filter(note => note._id !== id)); // Change note.id to note._id
     } catch (err) {
       alert(`Error deleting note: ${err}`);
     }
-  };
+  }
 
   const handleEdit = (id) => {
     navigate(`/edit/${id}`);
@@ -26,7 +26,7 @@ const Notes = ({ notesData, setNotesData, loading }) => {
   const handleColorChange = async (id, color) => {
     setNotesData(prev =>
       prev.map(note =>
-        note.id === id ? { ...note, color } : note
+        note._id === id ? { ...note, color } : note
       )
     );
 
@@ -63,7 +63,7 @@ const Notes = ({ notesData, setNotesData, loading }) => {
           </thead>
           <tbody>
             {notesData.map((note, index) => (
-              <tr key={note.id} >
+              <tr key={note._id} >
                 <td className="border border-slate-300 w-[50px] p-1 text-center">
                   {index + 1}
                 </td>
@@ -74,7 +74,7 @@ const Notes = ({ notesData, setNotesData, loading }) => {
                   <select
                     className='mx-5 w-30 p-1 rounded'
                     value={note.color || ''}
-                    onChange={(e) => handleColorChange(note.id, e.target.value)}
+                    onChange={(e) => handleColorChange(note._id, e.target.value)}
                   >
                     <option value="">Select Color</option>
                     <option value="blue">Blue</option>
@@ -85,13 +85,13 @@ const Notes = ({ notesData, setNotesData, loading }) => {
                 </td>
                 <td className="border border-slate-300">
                   <button
-                    onClick={() => handleEdit(note.id)}
+                    onClick={() => handleEdit(note._id)}
                     className="mx-8 bg-green-700 w-14 rounded-xl p-0.5 text-white hover:bg-green-800"
                   >
                     Edit
                   </button>
                   <button
-                    onClick={() => handleDelete(note.id)}
+                    onClick={() => handleDelete(note._id)}
                     className="bg-red-700 w-14 rounded-xl p-0.5 text-white hover:bg-red-800"
                   >
                     Delete

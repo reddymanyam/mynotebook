@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const AddNotes = ({ setNotesData }) => {
+const AddNotes = ({ setNotesData , getNotes }) => {
   const [noteText, setNoteText] = useState("");
 
   const navigate = useNavigate();
@@ -13,6 +13,7 @@ const AddNotes = ({ setNotesData }) => {
     try {
       const response = await axios.post("http://localhost:7777/users", newnote);
       setNotesData(prev => [...prev, response.data]);
+      // getNotes();
       navigate('/');
     } catch (err) {
       alert(`Error adding note: ${err}`);

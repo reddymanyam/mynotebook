@@ -31,7 +31,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Notes notesData={notesData} setNotesData={setNotesData} loading={loading} />} />
         <Route path="/edit/:id" element={<EditPage notesData={notesData} setNotesData={setNotesData} getNotes={getNotes} />} />
-        <Route path="/addnotes" element={<AddNotes setNotesData={setNotesData} />} />
+        <Route path="/addnotes" element={<AddNotes setNotesData={setNotesData} getNotes={getNotes} />} />
       </Routes>
     </Router>
   );
